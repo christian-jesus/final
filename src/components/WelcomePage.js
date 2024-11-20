@@ -1,84 +1,66 @@
-import React from "react";
-import "./WelcomePage.css"; 
-import th from "./img/th.jpg"; // Importa la imagen principal
-import logo from "./img/logo.png"; // Importa el logo
+import React, { useState } from "react";
+import "./WelcomePage.css"; // Ruta corregida al archivo CSS
+import th from "./img/th.jpg"; // Ruta corregida a la imagen
+import RegisterForm from "./RegisterForm"; // La ruta aquí está bien
 
 const ArvoFont = `
   @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap');
 `;
 
-// Array con los detalles de las academias
 const academies = [
   {
     id: 1,
     title: "Academia Andina",
-    image: require('./img/andina.jpeg'), // Imagen de Academia Andina
+    image: require('./img/andina.jpeg'), // Ruta corregida
   },
   {
     id: 2,
     title: "Academia Cultural",
-    image: require('./img/cultural.jpeg'), // Imagen de Academia Cultural
+    image: require('./img/cultural.jpeg'), // Ruta corregida
   },
 ];
 
 const WelcomePage = () => {
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+
   return (
     <>
       <style>{ArvoFont}</style>
       <div className="welcome-page">
-        {/* Barra de navegación */}
-        <nav className="navbar">
-          <div className="navbar-logo">
-            <img src={logo} alt="Logo" className="logo" /> {/* Agrega el logo aquí */}
-            SoloGuitar
-          </div>
-          <ul className="navbar-links">
-            <li><a href="#tutoriales">Tutoriales</a></li>
-            <li><a href="#comunidad">Comunidad</a></li>
-            <li><a href="#academias">Academias afiliadas</a></li>
-            <li><a href="#canciones">Canciones</a></li>
-            <li>
-            <button className="navbar-button">Iniciar sesión</button>
-            </li>
-            </ul>
-        </nav>
+        {showRegisterForm ? (
+          <RegisterForm onClose={() => setShowRegisterForm(false)} />
+        ) : (
+          <main className="main-content">
+            <div className="welcome-text">
+              <h1>¡Bienvenido a SoloGuitar!</h1>
+              <p>Explora nuestra plataforma para aprender y mejorar tus habilidades de guitarra.</p>
+            </div>
 
-        {/* Contenido principal de la bienvenida */}
-        <main className="main-content">
-          <div className="welcome-text">
-            <h1>¡Bienvenido a SoloGuitar!</h1>
-            <p>Explora nuestra plataforma para aprender y mejorar tus habilidades de guitarra.</p>
-          </div>
-
-          {/* Imagen publicitaria y texto */}
-          <div className="advertisement">
-            <img src={th} alt="Publicidad" className="advertisement-image" />
-            <div className="advertisement-text">
-              <h2>Aprende a tocar guitarra con el método</h2>
-              <h3>más fácil, simple y efectivo</h3>
-              <p>En poco tiempo estarás tocando tus canciones favoritas con las mejores clases de guitarra online</p>
-              <div className="buttons">
-                <button>Materiales de aprendizaje</button>
-                <button>Registrarse</button>
+            <div className="advertisement">
+              <img src={th} alt="Publicidad" className="advertisement-image" />
+              <div className="advertisement-text">
+                <h2>Aprende a tocar guitarra con el método</h2>
+                <h3>más fácil, simple y efectivo</h3>
+                <p>En poco tiempo estarás tocando tus canciones favoritas con las mejores clases de guitarra online</p>
+                <div className="buttons">
+                  <button>Materiales de aprendizaje</button>
+                  {/* El botón de registro ha sido eliminado */}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Título de academias afiliadas */}
-          <h2 className="academies-title">Academias Afiliadas</h2>
+            <h2 className="academies-title">Academias Afiliadas</h2>
+            <div className="academies-container">
+              {academies.map((academy) => (
+                <div key={academy.id} className="academy-card">
+                  <img src={academy.image} alt={academy.title} className="academy-image" />
+                  <button className="button">Visitar</button>
+                </div>
+              ))}
+            </div>
+          </main>
+        )}
 
-          {/* Sección de academias afiliadas */}
-          <div className="academies-container">
-            {academies.map((academy) => (
-              <div key={academy.id} className="academy-card">
-                <img src={academy.image} alt={academy.title} className="academy-image" />
-                <button className="button">Visitar</button> {/* Cambiado a "Visitar" */}
-              </div>
-            ))}
-          </div>
-        </main>
-
-        {/* Pie de página con derechos de autor y políticas */}
         <footer className="footer">
           <div className="footer-links">
             <a href="#terminos">Términos y condiciones</a>
